@@ -6,10 +6,10 @@ interface CustomPaginationProps {
 
 }
 export const CustomPagination: FC<CustomPaginationProps> = ({ totalPages }) => {
-    const page = 8;
+    const page = 8 as number; // Current page (hardcoded for now)
     return (
         <div className="flex items-center justify-center space-x-2">
-            <Button variant="outline" size="sm" disabled>
+            <Button variant="outline" size="sm" disabled={page === 1}>
                 <ChevronLeft className="h-4 w-4" />
                 Previous
             </Button>
@@ -39,7 +39,7 @@ export const CustomPagination: FC<CustomPaginationProps> = ({ totalPages }) => {
                 <MoreHorizontal className="h-4 w-4" />
             </Button> */}
 
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" disabled={page === totalPages}>
                 Next
                 <ChevronRight className="h-4 w-4" />
             </Button>

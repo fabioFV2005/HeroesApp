@@ -4,6 +4,7 @@ import { HeroStats } from "@/heroes/components/HeroStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
 import { useState } from "react"
 import { CustomPagination } from '../../../components/custom/CustomPagination';
+import { CustomBreadcrumbs } from "@/components/custom/CustomBreadcrumbs";
 
 export const HomePage = () => {
     const [activeTab, setActiveTab] = useState<"all" | "favorites" | "heroes" | "villains">("all");
@@ -16,6 +17,11 @@ export const HomePage = () => {
                 <CustomJumbotron
                     title="Universo de superHeroes"
                     description="Descubre, explora y administra super heroes y villanos"
+                />
+
+                {/* Breadcrumbs */}
+
+                <CustomBreadcrumbs
                 />
 
                 {/* Stats Dashboard */}
@@ -75,8 +81,8 @@ export const HomePage = () => {
 
 
                 {/* Pagination */}
-                <CustomPagination 
-                totalPages={8}
+                <CustomPagination
+                    totalPages={8}
                 />
 
             </>
