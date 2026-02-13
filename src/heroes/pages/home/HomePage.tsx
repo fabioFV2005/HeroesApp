@@ -22,6 +22,7 @@ export const HomePage = () => {
                 {/* Breadcrumbs */}
 
                 <CustomBreadcrumbs
+                    url="SuperHeroes"
                 />
 
                 {/* Stats Dashboard */}

@@ -12,6 +12,13 @@ const SearchPage = () => {
             />
             <CustomBreadcrumbs
                 url="search"
+            // breadcrumbs={
+            // [
+            //     { label: "Home", to: "/" },
+            //     { label: "Home", to: "/" },
+            //     { label: "Home", to: "/" },
+            // ]
+            // }
             />
 
             <HeroStats />

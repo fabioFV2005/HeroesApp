@@ -9,10 +9,15 @@ import {
 } from "@/components/ui/breadcrumb"
 import { DotIcon } from "lucide-react"
 import type { FC } from 'react';
+interface Breadcrumb {
+    label: string;
+    to: string;
+}
 interface BreadCrumbProps {
     url?: string;
+    breadcrumbs?: Breadcrumb[];
 }
-export const CustomBreadcrumbs: FC<BreadCrumbProps> = ({ url }) => {
+export const CustomBreadcrumbs: FC<BreadCrumbProps> = ({ url, breadcrumbs = [] }) => {
 
     return (
         <Breadcrumb className='my-5'>
@@ -25,15 +30,33 @@ export const CustomBreadcrumbs: FC<BreadCrumbProps> = ({ url }) => {
                             to="/">Home</Link>
                     </BreadcrumbPage>
                 </BreadcrumbItem>
-                {url && (
+                {url && breadcrumbs.length === 0 && (
                     <BreadcrumbSeparator>
                         <DotIcon />
                     </BreadcrumbSeparator>
                 )}
+                {
+                    breadcrumbs.map(crumb => (
+                        <div className='flex items-center'>
+                            <BreadcrumbSeparator>
+                                <DotIcon />
+                            </BreadcrumbSeparator>
+                            <BreadcrumbItem>
+                                <BreadcrumbPage >
+
+                                    <Link
+                                        to={crumb.to}>{crumb.label}</Link>
+                                </BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </div>
+
+                    ))
+                }
+
                 {url && (
                     <BreadcrumbItem>
                         <BreadcrumbPage>
-                            <BreadcrumbLink className='text-black'>{url}</BreadcrumbLink>
+                            <BreadcrumbLink className='text-black font-bold'>{url}</BreadcrumbLink>
                         </BreadcrumbPage>
                     </BreadcrumbItem>
                 )}
