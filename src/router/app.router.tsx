@@ -1,6 +1,6 @@
 import { HeroPage } from "@/heroes/pages/hero/HeroPage";
 import { HomePage } from "@/heroes/pages/home/HomePage"
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 // import { SearchPage } from "";
 import { AdminPage } from "@/admin/pages/AdminPage";
 import { HeroesLayout } from "@/heroes/layouts/HeroesLayout";
@@ -17,7 +17,7 @@ export const appRouter = createBrowserRouter([
                 element: <HomePage />
             },
             {
-                path: "/heroes/1",
+                path: "/heroes/:idSlug",
                 element: <HeroPage />
             },
             {
@@ -38,7 +38,7 @@ export const appRouter = createBrowserRouter([
     },
     {
         path: "*",
-        element: <h1>404 - Not Found</h1>
+        element: <Navigate to="/" />
     }
 
 ]);
