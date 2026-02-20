@@ -7,18 +7,23 @@ import { CustomPagination } from '../../../components/custom/CustomPagination';
 import { CustomBreadcrumbs } from "@/components/custom/CustomBreadcrumbs";
 import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page.action";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router";
 
 export const HomePage = () => {
-    const [activeTab, setActiveTab] = useState<"all" | "favorites" | "heroes" | "villains">("all");
+    const [searchParams, setSearchParams] = useSearchParams();
+    // const [activeTab, setActiveTab] = useState<"all" | "favorites" | "heroes" | "villains">("all");
+    const activeTab = searchParams.get('tab') as string;
     const { data: heroesResponse, isLoading } = useQuery({
         queryKey: ['heroes'],
         queryFn: () => getHeroesByPageAction(),
         staleTime: 1000 * 60 * 5
     })
+
+
     if (isLoading) {
         return <div className="flex items-center justify-center">Loading...</div>
     }
-    console.log(heroesResponse)
+    // console.log(heroesResponse)
     return (
         <>
             <>
@@ -46,22 +51,24 @@ export const HomePage = () => {
                     <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger
                             value="all"
-                            onClick={() => setActiveTab("all")}
+                            onClick={() => setSearchParams({ tab: 'all' })}
+
                         >
                             All Characters (16)</TabsTrigger>
                         <TabsTrigger
                             value="favorites"
-                            onClick={() => setActiveTab('favorites')}
+                            onClick={() => setSearchParams({ tab: 'favorites' })}
                         >
                             Favorites (3)
                         </TabsTrigger>
                         <TabsTrigger
                             value="heroes"
-                            onClick={() => setActiveTab('heroes')}
+                            onClick={() => setSearchParams({ tab: 'heroes' })}
+                        // onClick={() => setActiveTab('heroes')}
                         >Heroes (12)</TabsTrigger>
                         <TabsTrigger
                             value="villains"
-                            onClick={() => setActiveTab('villains')}
+                            onClick={() => setSearchParams({ tab: 'villains' })}
                         >Villains (2)</TabsTrigger>
                     </TabsList>
                     <TabsContent value="all">

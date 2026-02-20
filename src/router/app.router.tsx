@@ -9,7 +9,7 @@ import { lazy } from "react";
 const SearchPage = lazy(() => import('@/heroes/pages/search/SearchPage'));
 export const appRouter = createBrowserRouter([
     {
-        path: "/",
+        path: "/:tab?",
         element: <HeroesLayout />,
         children: [
             {
