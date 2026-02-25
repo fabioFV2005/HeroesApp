@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { CustomJumbotron } from '../../../components/custom/CustomJumbotron';
 import { HeroStats } from "@/heroes/components/HeroStats"
@@ -11,11 +11,21 @@ import { useSearchParams } from "react-router";
 
 export const HomePage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    // const [activeTab, setActiveTab] = useState<"all" | "favorites" | "heroes" | "villains">("all");
+
     const activeTab = searchParams.get('tab') as string;
+    const page = searchParams.get('page') as string || '1';
+    const limit = searchParams.get('limit') as string || '6';
+
+    const selectedTab = useMemo(() => {
+        const validTabs = ['all', 'favorites', 'heroes', 'villains'];
+        return validTabs.includes(activeTab) ? activeTab : 'all';
+    }, [activeTab])
     const { data: heroesResponse, isLoading } = useQuery({
-        queryKey: ['heroes'],
-        queryFn: () => getHeroesByPageAction(),
+        queryKey: ['heroes', {
+            page,
+            limit
+        }],
+        queryFn: () => getHeroesByPageAction(+page, +limit),
         staleTime: 1000 * 60 * 5
     })
 
@@ -47,7 +57,7 @@ export const HomePage = () => {
 
 
                 {/* Tabs */}
-                <Tabs value={activeTab} className="mb-8">
+                <Tabs value={selectedTab} className="mb-8">
                     <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger
                             value="all"
@@ -108,7 +118,7 @@ export const HomePage = () => {
 
                 {/* Pagination */}
                 <CustomPagination
-                    totalPages={8}
+                    totalPages={heroesResponse?.pages ?? 1}
                 />
 
             </>
